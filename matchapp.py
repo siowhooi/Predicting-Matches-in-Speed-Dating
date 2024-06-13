@@ -41,15 +41,24 @@ st.sidebar.header('User Input Features')
 
 def user_input_features():
     inputs = {}
-    inputs['gender'] = st.sidebar.selectbox('Select your gender', ['Female', 'Male'])
+    gender_mapping = {
+        'Female': 0,
+        'Male': 1
+    }
+    inputs['gender'] = st.sidebar.selectbox('Select your gender', list(gender_mapping.keys()))
     inputs['age'] = st.sidebar.slider('Select your age', 18, 60, 30)
     inputs['income'] = st.sidebar.slider('Select your income', 0, 200000, 50000, step=1000)
-    inputs['goal'] = st.sidebar.selectbox('Select your primary goal', ['Seemed like a fun night out', 
-                                                                       'To meet new people',
-                                                                       'To get a date',
-                                                                       'Looking for a serious relationship',
-                                                                       'To say I did it',
-                                                                       'Other'])
+    
+    goal_mapping = {
+        'Seemed like a fun night out': 1,
+        'To meet new people': 2,
+        'To get a date': 3,
+        'Looking for a serious relationship': 4,
+        'To say I did it': 5,
+        'Other': 6
+    }
+    inputs['goal'] = st.sidebar.selectbox('Select your primary goal', list(goal_mapping.keys()))
+    
     inputs['attr'] = st.sidebar.slider('Rate the opposite sex\'s attractiveness (1-10)', 1, 10, 5)
     inputs['sinc'] = st.sidebar.slider('Rate the opposite sex\'s sincerity (1-10)', 1, 10, 5)
     inputs['intel'] = st.sidebar.slider('Rate the opposite sex\'s intelligence (1-10)', 1, 10, 5)
@@ -66,6 +75,9 @@ input_df = user_input_features()
 missing_cols = set(X_train.columns) - set(input_df.columns)
 for col in missing_cols:
     input_df[col] = 0  # Assuming default values for missing columns
+
+# Map gender to numerical values
+input_df['gender'] = input_df['gender'].map(gender_mapping)
 
 # Load the model
 model = joblib.load('rf_classifier_model.pkl')
