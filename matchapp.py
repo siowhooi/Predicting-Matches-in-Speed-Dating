@@ -59,7 +59,7 @@ def user_input_features():
     inputs = {}
     inputs['gender'] = st.sidebar.selectbox('Select your gender', list(gender_mapping.keys()))
     inputs['age'] = st.sidebar.slider('Select your age', 18, 60, 30)
-    inputs['income'] = st.sidebar.slider('Select your income', 0, 200000, 50000, step=1000)
+    inputs['income'] = st.sidebar.slider('Select your income', 0, 200000, 50000, step=1)
     
     inputs['goal'] = st.sidebar.selectbox('Select your primary goal', list(goal_mapping.keys()))
     
