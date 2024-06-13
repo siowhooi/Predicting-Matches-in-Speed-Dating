@@ -10,6 +10,16 @@ gender_mapping = {
     'Male': 1
 }
 
+# Define goal mapping
+goal_mapping = {
+    'Seemed like a fun night out': 1,
+    'To meet new people': 2,
+    'To get a date': 3,
+    'Looking for a serious relationship': 4,
+    'To say I did it': 5,
+    'Other': 6
+}
+
 # Load data
 @st.cache  # Cache the data loading to optimize performance
 def load_data():
@@ -47,22 +57,10 @@ st.sidebar.header('User Input Features')
 
 def user_input_features():
     inputs = {}
-    gender_mapping = {
-        'Female': 0,
-        'Male': 1
-    }
     inputs['gender'] = st.sidebar.selectbox('Select your gender', list(gender_mapping.keys()))
     inputs['age'] = st.sidebar.slider('Select your age', 18, 60, 30)
     inputs['income'] = st.sidebar.slider('Select your income', 0, 200000, 50000, step=1000)
     
-    goal_mapping = {
-        'Seemed like a fun night out': 1,
-        'To meet new people': 2,
-        'To get a date': 3,
-        'Looking for a serious relationship': 4,
-        'To say I did it': 5,
-        'Other': 6
-    }
     inputs['goal'] = st.sidebar.selectbox('Select your primary goal', list(goal_mapping.keys()))
     
     inputs['attr'] = st.sidebar.slider('Rate the opposite sex\'s attractiveness (1-10)', 1, 10, 5)
@@ -82,8 +80,12 @@ missing_cols = set(X_train.columns) - set(input_df.columns)
 for col in missing_cols:
     input_df[col] = 0  # Assuming default values for missing columns
 
-# Map gender to numerical values
+# Map gender and goal to numerical values
 input_df['gender'] = input_df['gender'].map(gender_mapping)
+input_df['goal'] = input_df['goal'].map(goal_mapping)
+
+# Reorder input_df columns to match X_train columns
+input_df = input_df[X_train.columns]
 
 # Load the model
 model = joblib.load('rf_classifier_model.pkl')
