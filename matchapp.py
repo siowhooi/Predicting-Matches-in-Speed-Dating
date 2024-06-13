@@ -71,6 +71,11 @@ def user_input_features():
     inputs['shar'] = st.sidebar.slider('Rate the opposite sex\'s shared interests (1-10)', 1, 10, 5)
     inputs['like'] = st.sidebar.slider('Overall, how much do you like this person? (1-10)', 1, 10, 5)
     
+    # New features
+    inputs['prob'] = st.sidebar.slider('How probable do you think it is that this person will say \'yes\' for you? (1-10)', 1, 10, 5)
+    inputs['met'] = st.sidebar.selectbox('Have you met this person before?', ['Yes', 'No'])
+    inputs['met'] = 1 if inputs['met'] == 'Yes' else 0
+    
     return pd.DataFrame(inputs, index=[0])
 
 input_df = user_input_features()
