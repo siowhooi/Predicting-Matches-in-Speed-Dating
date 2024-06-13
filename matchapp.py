@@ -42,7 +42,7 @@ st.sidebar.header('User Input Features')
 def user_input_features():
     inputs = {}
     for col in X.columns:
-        inputs[col] = st.sidebar.number_input(f'Enter {col}', min_value=0.0, max_value=10.0, step=0.1)
+        inputs[col] = st.sidebar.number_input(f'Enter {col}', min_value=0, max_value=10, step=1)
     return pd.DataFrame(inputs, index=[0])
 
 input_df = user_input_features()
@@ -53,5 +53,5 @@ model = joblib.load('rf_classifier_model.pkl')
 # Prediction
 prediction = model.predict(input_df)
 
-st.subheader('Prediction')
+st.subheader('Prediction:')
 st.write("It's a Match!" if prediction[0] == 1 else 'Not a Match.')
