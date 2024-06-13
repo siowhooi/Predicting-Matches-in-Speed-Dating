@@ -4,6 +4,12 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 import joblib
 
+# Define gender mapping
+gender_mapping = {
+    'Female': 0,
+    'Male': 1
+}
+
 # Load data
 @st.cache  # Cache the data loading to optimize performance
 def load_data():
