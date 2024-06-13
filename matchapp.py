@@ -41,8 +41,23 @@ st.sidebar.header('User Input Features')
 
 def user_input_features():
     inputs = {}
-    for col in X.columns:
-        inputs[col] = st.sidebar.number_input(f'Enter {col}', min_value=0, max_value=10, step=1)
+    inputs['gender'] = st.sidebar.selectbox('Select your gender', ['Female', 'Male'])
+    inputs['age'] = st.sidebar.slider('Select your age', 18, 60, 30)
+    inputs['income'] = st.sidebar.slider('Select your income', 0, 200000, 50000, step=1000)
+    inputs['goal'] = st.sidebar.selectbox('Select your primary goal', ['Seemed like a fun night out', 
+                                                                       'To meet new people',
+                                                                       'To get a date',
+                                                                       'Looking for a serious relationship',
+                                                                       'To say I did it',
+                                                                       'Other'])
+    inputs['attr'] = st.sidebar.slider('Rate the opposite sex\'s attractiveness (1-10)', 1, 10, 5)
+    inputs['sinc'] = st.sidebar.slider('Rate the opposite sex\'s sincerity (1-10)', 1, 10, 5)
+    inputs['intel'] = st.sidebar.slider('Rate the opposite sex\'s intelligence (1-10)', 1, 10, 5)
+    inputs['fun'] = st.sidebar.slider('Rate the opposite sex\'s fun (1-10)', 1, 10, 5)
+    inputs['amb'] = st.sidebar.slider('Rate the opposite sex\'s ambitiousness (1-10)', 1, 10, 5)
+    inputs['shar'] = st.sidebar.slider('Rate the opposite sex\'s shared interests (1-10)', 1, 10, 5)
+    inputs['like'] = st.sidebar.slider('Overall, how much do you like this person? (1-10)', 1, 10, 5)
+    
     return pd.DataFrame(inputs, index=[0])
 
 input_df = user_input_features()
