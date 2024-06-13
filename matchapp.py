@@ -44,7 +44,8 @@ def user_input_features():
     inputs['gender'] = st.sidebar.selectbox('Select your gender', ['Female', 'Male'])
     inputs['age'] = st.sidebar.slider('Select your age', 18, 60, 30)
     inputs['income'] = st.sidebar.slider('Select your income', 0, 200000, 50000, step=1000)
-     # Mapping for 'goal' feature
+    
+    # Mapping for 'goal' feature
     goal_mapping = {
         'Seemed like a fun night out': 1,
         'To meet new people': 2,
@@ -54,7 +55,7 @@ def user_input_features():
         'Other': 6
     }
     inputs['goal'] = st.sidebar.selectbox('Select your primary goal', list(goal_mapping.keys()))
-    
+
     inputs['attr'] = st.sidebar.slider('Rate the opposite sex\'s attractiveness (1-10)', 1, 10, 5)
     inputs['sinc'] = st.sidebar.slider('Rate the opposite sex\'s sincerity (1-10)', 1, 10, 5)
     inputs['intel'] = st.sidebar.slider('Rate the opposite sex\'s intelligence (1-10)', 1, 10, 5)
@@ -66,6 +67,22 @@ def user_input_features():
     return pd.DataFrame(inputs, index=[0])
 
 input_df = user_input_features()
+
+# Mapping user input for 'goal' to numerical values
+goal_mapping = {
+    'Seemed like a fun night out': 1,
+    'To meet new people': 2,
+    'To get a date': 3,
+    'Looking for a serious relationship': 4,
+    'To say I did it': 5,
+    'Other': 6
+}
+input_df['goal'] = input_df['goal'].map(goal_mapping)
+
+# Ensure input_df has the same columns as X_train
+missing_cols = set(X_train.columns) - set(input_df.columns)
+for col in missing_cols:
+    input_df[col] = 0  # Assuming default values for missing columns
 
 # Load the model
 model = joblib.load('rf_classifier_model.pkl')
