@@ -44,7 +44,17 @@ def user_input_features():
     inputs['gender'] = st.sidebar.selectbox('Select your gender', ['Female', 'Male'])
     inputs['age'] = st.sidebar.slider('Select your age', 18, 60, 30)
     inputs['income'] = st.sidebar.slider('Select your income', 0, 200000, 50000, step=1000)
-    inputs['goal'] = st.sidebar.selectbox('Select your primary goal(Seemed like a fun night out=1, To meet new people=2, To get a date=3, Looking for a serious relationship=4, To say I did it=5, Other=6)', 1, 6, 5)
+     # Mapping for 'goal' feature
+    goal_mapping = {
+        'Seemed like a fun night out': 1,
+        'To meet new people': 2,
+        'To get a date': 3,
+        'Looking for a serious relationship': 4,
+        'To say I did it': 5,
+        'Other': 6
+    }
+    inputs['goal'] = st.sidebar.selectbox('Select your primary goal', list(goal_mapping.keys()))
+    
     inputs['attr'] = st.sidebar.slider('Rate the opposite sex\'s attractiveness (1-10)', 1, 10, 5)
     inputs['sinc'] = st.sidebar.slider('Rate the opposite sex\'s sincerity (1-10)', 1, 10, 5)
     inputs['intel'] = st.sidebar.slider('Rate the opposite sex\'s intelligence (1-10)', 1, 10, 5)
